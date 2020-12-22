@@ -100,4 +100,4 @@ talks.addEventListener('tagClick', event => {
 ```
 
 # Credits
-Thanks to [Juri Strumpflohner](https://github.com/juristr) and [ngx-lazy-el](https://github.com/juristr/ngx-lazy-el)!
+Thanks to [brunob15](https://github.com/brunob15)!
