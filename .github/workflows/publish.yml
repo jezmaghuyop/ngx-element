@@ -1,5 +1,4 @@
-
-name: Publish xena-design-system
+name: Publish ngx-element
 on:
   push:
     branches:
@@ -15,8 +14,10 @@ jobs:
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
-          scope: '@apaq'
+          scope: '@eg-brs'
       - run: npm install
-      - run: npm publish
+      - run: npm run build --if-present
+      - run: npm test
+      - run: npm publish ./dist/ngx-element
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
