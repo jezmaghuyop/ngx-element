@@ -76,7 +76,7 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   createComponent(attributes) {
     const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentToLoad);
 
-    if (this.registry.useCustomElementNames && this.ngxElementService.isSelectorRegistered(factory.selector)) {
+    if (this.ngxElementService.isSelectorRegistered(factory.selector)) {
       console.warn(`Cannot lazy load component that defines ${factory.selector} as a selector, because the selector is
                     already reserved in the LazyComponentRegistry.`);
       return;
@@ -106,12 +106,11 @@ export class NgxElementComponent implements OnInit, OnDestroy {
     for (let attr, i = 0; i < attrs.length; i++) {
       attr = attrs[i];
 
-      if ((!this.registry.useCustomElementNames && attr.nodeName.match('^data-')) || this.registry.useCustomElementNames) {
-        attributes.push({
-          name: this.camelCaseAttribute(attr.nodeName),
-          value: attr.nodeValue
-        });
-      }
+      attributes.push({
+        name: this.camelCaseAttribute(attr.nodeName),
+        value: attr.nodeValue
+      });
+    
     }
 
     return attributes;
@@ -166,8 +165,6 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   }
 
   private resolveSelector() {
-    return this.registry.useCustomElementNames ?
-      this.elementRef.nativeElement.localName.substring(this.registry.customElementNamePrefix.length + 1) :
-      this.selector;
+    return this.elementRef.nativeElement.localName.substring(this.registry.prefix.length + 1);
   }
 }

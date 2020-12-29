@@ -12,10 +12,8 @@ export interface LazyComponentDef {
 export interface LazyComponentRegistry {
   /** A list of LazyComponentDef for this registry. */
   definitions: LazyComponentDef[];
-  /** Whether this uses native custom element tag names or an selector attribute. */
-  useCustomElementNames: boolean;
-  /** If useCustomElementNames is true, then this specifies the REQUIRED prefix for the tag names according to Custom Element specification. */
-  customElementNamePrefix?: string;
+  /** This specifies the REQUIRED prefix for the tag names according to Custom Element specification. */
+  prefix: string;
 }
 
 export function createDef(selector: string, loadChildren: LoadChildrenCallback): LazyComponentDef {

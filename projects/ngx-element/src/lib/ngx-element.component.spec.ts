@@ -12,7 +12,7 @@ describe('NgxElementComponent', () => {
       createDef('talk', () => import('../../../ngx-element-app/src/app/talk/talk.module').then(m => m.TalkModule)),
       createDef('sponsor', () => import('../../../ngx-element-app/src/app/sponsor/sponsor.module').then(m => m.SponsorModule))
     ],
-    useCustomElementNames: false
+    prefix: 'ws'
   };
 
   beforeEach(async(() => {

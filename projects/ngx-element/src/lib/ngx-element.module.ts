@@ -10,15 +10,10 @@ import { LazyComponentRegistry, LAZY_CMPS_REGISTRY } from './tokens';
 export class NgxElementModule {
 
   constructor(private injector: Injector, @Inject(LAZY_CMPS_REGISTRY) private registry: LazyComponentRegistry) {
-    if(!registry.useCustomElementNames) {
+    registry.definitions.forEach(def => {
       const ngxElement = createCustomElement(NgxElementComponent, { injector });
-      customElements.define('ngx-element', ngxElement);
-    } else {
-      registry.definitions.forEach(def => {
-        const ngxElement = createCustomElement(NgxElementComponent, { injector });
-        customElements.define(`${registry.customElementNamePrefix}-${def.selector}`, ngxElement);
-      });
-    }
+      customElements.define(`${registry.prefix}-${def.selector}`, ngxElement);
+    });
   }
 
   static forRoot(registry: any): ModuleWithProviders<NgxElementModule> {
