@@ -1,5 +1,5 @@
 {
-  "name": "ngx-element",
+  "name": "@apaq/ngx-element",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
