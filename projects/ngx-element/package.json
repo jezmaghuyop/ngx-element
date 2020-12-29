@@ -1,16 +1,16 @@
 {
   "name": "@apaq/ngx-element",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "A simple way to lazy load Angular components in non-angular projects",
-  "author": "Bruno Bradach",
+  "author": "Michael Krog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brunob15/ngx-element.git"
+    "url": "https://github.com/apaq/ngx-element.git"
   },
   "bugs": {
-    "url": "https://github.com/brunob15/ngx-element/issues"
+    "url": "https://github.com/apaq/ngx-element/issues"
   },
-  "homepage": "https://github.com/brunob15/ngx-element",
+  "homepage": "https://github.com/apaq/ngx-element",
   "keywords": [
     "angular",
     "elements",
