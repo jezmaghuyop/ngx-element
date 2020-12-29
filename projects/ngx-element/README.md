@@ -1,5 +1,4 @@
-[![npm version](https://badge.fury.io/js/ngx-element.svg)](https://badge.fury.io/js/ngx-element)
-![Tests CI](https://github.com/brunob15/ngx-element/workflows/Tests%20CI/badge.svg)
+![Tests CI](https://github.com/apaq/ngx-element/workflows/Tests%20CI/badge.svg)
 
 # NgxElement
 
@@ -16,7 +15,7 @@ $ ng add @angular/elements
 
 ## Installing the library
 ```
-$ npm install ngx-element
+$ npm install @apaq/ngx-element
 ```
 
 ## Usage
@@ -49,7 +48,7 @@ const lazyConfig = {
       loadChildren: () => import('./talk/talk.module').then(m => m.TalkModule)
     }
   ],
-  useCustomElementNames: false
+  prefix: 'ws'
 ];
 
 
@@ -71,12 +70,11 @@ export class AppModule {
 You can load your Angular component by adding an `<ngx-element>` tag to the DOM in your non-angular application like follows:
 
 ```
-<ngx-element
-  selector="talk"
-  data-title="Angular Elements"
-  data-description="How to write Angular and get Web Components"
-  data-speaker="Bruno">
-</ngx-element>
+<ws-talk
+  title="Angular Elements"
+  description="How to write Angular and get Web Components"
+  speaker="Bruno">
+</ws-talk>
 ```
 
 ### 4) Listen to events
@@ -93,7 +91,7 @@ Add an `@Output` event to your component:
 Then add an event listener to the `tagClick` event on the appropiate `<ngx-element>` element:
 
 ```
-const talks = document.querySelector('ngx-element[selector="talk"]');
+const talks = document.querySelector('ws-talk');
 talks.addEventListener('tagClick', event => {
   const emittedValue = event.detail;
   ...
