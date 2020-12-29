@@ -165,6 +165,8 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   }
 
   private resolveSelector() {
-    return this.elementRef.nativeElement.localName.substring(this.registry.prefix.length + 1);
+    const tagName = this.elementRef.nativeElement.localName;
+    console.log('tag', tagName);
+    return tagName.substring(this.registry.prefix.length + 1);
   }
 }
