@@ -1,6 +1,6 @@
 {
   "name": "@apaq/ngx-element",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A simple way to lazy load Angular components in non-angular projects",
   "author": "Michael Krog",
   "repository": {
