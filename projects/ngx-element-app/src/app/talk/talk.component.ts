@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-talk',
   templateUrl: './talk.component.html',
   styleUrls: ['./talk.component.scss']
 })

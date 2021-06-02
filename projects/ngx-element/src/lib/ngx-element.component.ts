@@ -76,9 +76,8 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   createComponent(attributes) {
     const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentToLoad);
 
-    if (this.ngxElementService.isSelectorRegistered(factory.selector)) {
-      console.warn(`Cannot lazy load component that defines ${factory.selector} as a selector, because the selector is
-                    already reserved in the LazyComponentRegistry.`);
+    if (factory.selector != 'ng-component') {
+      console.warn(`Cannot lazy load component that defines a selector. Remove the ${factory.selector} selector from the component.`);
       return;
     }
 
@@ -166,7 +165,6 @@ export class NgxElementComponent implements OnInit, OnDestroy {
 
   private resolveSelector() {
     const tagName = this.elementRef.nativeElement.localName;
-    console.log('tag', tagName);
     return tagName.substring(this.registry.prefix.length + 1);
   }
 }
