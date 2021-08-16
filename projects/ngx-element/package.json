@@ -1,8 +1,11 @@
 {
   "name": "@apaq/ngx-element",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A simple way to lazy load Angular components in non-angular projects",
   "author": "Michael Krog",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/apaq/ngx-element.git"
@@ -24,8 +27,8 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^9.0.2",
-    "@angular/core": "^9.0.2",
-    "@angular/elements": "^9.0.2"
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@angular/elements": "^11.2.0"
   }
 }
