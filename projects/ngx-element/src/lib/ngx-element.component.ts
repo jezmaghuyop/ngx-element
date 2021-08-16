@@ -11,7 +11,8 @@ import {
   EventEmitter,
   ElementRef,
   Injector,
-  Inject
+  Inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import {NgxElementService} from './ngx-element.service';
 import {merge, Subscription} from 'rxjs';
@@ -42,6 +43,26 @@ export class NgxElementComponent implements OnInit, OnDestroy {
     private elementRef: ElementRef,
     @Inject(LAZY_CMPS_REGISTRY) private registry: LazyComponentRegistry
   ) { }
+
+  /**
+   * Add input proxies of a lazy loaded and dynamically instantiated Angular component
+   * and set the on the actual element when it is ready.
+   */
+     private setProxiedInputs(factory: ComponentFactory<any>): void {
+      factory.inputs.forEach(input => {
+        const comRef = this.componentRef;
+        const changeDetector = comRef.changeDetectorRef as ChangeDetectorRef;
+        Object.defineProperty(this.elementRef.nativeElement, input.propName, {
+          get(this: NgxElementComponent) {
+            return (comRef.instance as any)[input.propName];
+          },
+          set(this: NgxElementComponent, value: any) {
+            (comRef.instance as any)[input.propName] = value;
+            changeDetector.detectChanges();
+          }
+        });
+      });
+    }
 
   /**
    * Subscribe to event emitters of a lazy loaded and dynamically instantiated Angular component
@@ -77,7 +98,8 @@ export class NgxElementComponent implements OnInit, OnDestroy {
     const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentToLoad);
 
     if (factory.selector != 'ng-component') {
-      console.warn(`Cannot lazy load component that defines a selector. Remove the ${factory.selector} selector from the component.`);
+      console.warn(`Cannot lazy load component that defines ${factory.selector} as a selector, because the selector is
+                    already reserved in the LazyComponentRegistry.`);
       return;
     }
 
@@ -89,6 +111,7 @@ export class NgxElementComponent implements OnInit, OnDestroy {
 
     this.setAttributes(attributes);
     this.listenToAttributeChanges();
+    this.setProxiedInputs(factory);
     this.setProxiedOutputs(factory);
   }
 
@@ -142,8 +165,13 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.componentRef.destroy();
-    this.ngElementEventsSubscription.unsubscribe();
+    if(this.componentRef != null) {
+      this.componentRef.destroy();
+    }
+
+    if(this.ngElementEventsSubscription != null) {
+      this.ngElementEventsSubscription.unsubscribe();
+    }
   }
 
   private extractProjectedNodes(factory: ComponentFactory<any>) {
