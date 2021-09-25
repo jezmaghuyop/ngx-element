@@ -52,6 +52,8 @@ export class NgxElementComponent implements OnInit, OnDestroy {
       factory.inputs.forEach(input => {
         const comRef = this.componentRef;
         const changeDetector = comRef.changeDetectorRef as ChangeDetectorRef;
+        
+        comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
         Object.defineProperty(this.elementRef.nativeElement, input.propName, {
           get(this: NgxElementComponent) {
             return (comRef.instance as any)[input.propName];
