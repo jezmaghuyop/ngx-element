@@ -51,7 +51,6 @@ export class NgxElementComponent implements OnInit, OnDestroy {
      private setProxiedInputs(factory: ComponentFactory<any>): void {
       factory.inputs.forEach(input => {
         const comRef = this.componentRef;
-        const changeDetector = comRef.changeDetectorRef as ChangeDetectorRef;
         
         comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
         Object.defineProperty(this.elementRef.nativeElement, input.propName, {
@@ -60,7 +59,6 @@ export class NgxElementComponent implements OnInit, OnDestroy {
           },
           set(this: NgxElementComponent, value: any) {
             (comRef.instance as any)[input.propName] = value;
-            changeDetector.detectChanges();
           }
         });
       });
