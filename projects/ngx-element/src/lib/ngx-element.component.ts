@@ -12,7 +12,8 @@ import {
   ElementRef,
   Injector,
   Inject,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  NgZone
 } from '@angular/core';
 import {NgxElementService} from './ngx-element.service';
 import {merge, Subscription} from 'rxjs';
@@ -41,6 +42,7 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   constructor(
     private ngxElementService: NgxElementService,
     private elementRef: ElementRef,
+    private ngZone: NgZone,
     @Inject(LAZY_CMPS_REGISTRY) private registry: LazyComponentRegistry
   ) { }
 
@@ -58,6 +60,10 @@ export class NgxElementComponent implements OnInit, OnDestroy {
             return (comRef.instance as any)[input.propName];
           },
           set(this: NgxElementComponent, value: any) {
+            const setter = () => (comRef.instance as any)[input.propName] = value;
+            NgZone.isInAngularZone()
+            ? setter()
+            : this.ngZone.run(setter);
             (comRef.instance as any)[input.propName] = value;
           }
         });
