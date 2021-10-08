@@ -53,18 +53,21 @@ export class NgxElementComponent implements OnInit, OnDestroy {
      private setProxiedInputs(factory: ComponentFactory<any>): void {
       factory.inputs.forEach(input => {
         const comRef = this.componentRef;
+        const setter = (value) => (comRef.instance as any)[input.propName] = value;
+        const zonedSetter = (value) => {
+          NgZone.isInAngularZone()
+            ? setter(value)
+            : this.ngZone.run(() => setter(value));
+            (comRef.instance as any)[input.propName] = value;
+        }
         
         comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
         Object.defineProperty(this.elementRef.nativeElement, input.propName, {
           get(this: NgxElementComponent) {
             return (comRef.instance as any)[input.propName];
           },
-          set(this: NgxElementComponent, value: any) {
-            const setter = () => (comRef.instance as any)[input.propName] = value;
-            NgZone.isInAngularZone()
-            ? setter()
-            : this.ngZone.run(setter);
-            (comRef.instance as any)[input.propName] = value;
+          set(this: NgxElementComponent, value: any)  {
+            zonedSetter(value);
           }
         });
       });
