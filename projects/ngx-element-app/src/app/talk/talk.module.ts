@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Type } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Type } from '@angular/core';
 import { TalkComponent } from './talk.component';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [TalkComponent],
-  imports: [CommonModule, NzButtonModule, NzTagModule],
+  imports: [CommonModule],
   exports: [TalkComponent],
-  entryComponents: [TalkComponent]
+  entryComponents: [TalkComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TalkModule {
   customElementComponent: Type<any> = TalkComponent;

@@ -61,7 +61,10 @@ export class NgxElementComponent implements OnInit, OnDestroy {
             (comRef.instance as any)[input.propName] = value;
         }
         
-        comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
+        if(this.elementRef.nativeElement[input.propName] !== undefined) {
+          comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
+        }
+        
         Object.defineProperty(this.elementRef.nativeElement, input.propName, {
           get(this: NgxElementComponent) {
             return (comRef.instance as any)[input.propName];

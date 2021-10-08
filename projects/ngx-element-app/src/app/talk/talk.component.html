@@ -4,17 +4,9 @@
 
     <div class="foot">
         <div class="tags">
-            <span
-                class="badge"
-                *ngFor="let tag of talkTags"
-                (click)="onTagClick(tag)"
-            >
-                {{ tag }}
-            </span>
+            <sl-badge class="mr-2" *ngFor="let tag of talkTags" (click)="onTagClick(tag)">{{tag}}</sl-badge>
         </div>
-        <p class="speaker">{{ speaker }}</p>
+        <sl-avatar>{{ speaker }}</sl-avatar>
     </div>
-</div> 
-<button nz-button nzType="primary">Primary Button</button>
-<nz-tag>Tag 1</nz-tag>
+</div>
  
