@@ -12,12 +12,11 @@ import {
   ElementRef,
   Injector,
   Inject,
-  ChangeDetectorRef,
   NgZone
 } from '@angular/core';
-import {NgxElementService} from './ngx-element.service';
-import {merge, Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { NgxElementService } from './ngx-element.service';
+import { merge, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LazyComponentRegistry, LAZY_CMPS_REGISTRY } from './tokens';
 
 @Component({
@@ -31,7 +30,7 @@ export class NgxElementComponent implements OnInit, OnDestroy {
 
   private ngElementEventsSubscription: Subscription;
   @Input() selector: string;
-  @ViewChild('container', {read: ViewContainerRef}) container;
+  @ViewChild('container', { read: ViewContainerRef }) container;
 
   componentRef;
   componentToLoad: Type<any>;
@@ -50,40 +49,40 @@ export class NgxElementComponent implements OnInit, OnDestroy {
    * Add input proxies of a lazy loaded and dynamically instantiated Angular component
    * and set the on the actual element when it is ready.
    */
-     private setProxiedInputs(factory: ComponentFactory<any>): void {
-      factory.inputs.forEach(input => {
-        const comRef = this.componentRef;
-        const setter = (value) => (comRef.instance as any)[input.propName] = value;
-        const zonedSetter = (value) => {
-          NgZone.isInAngularZone()
-            ? setter(value)
-            : this.ngZone.run(() => setter(value));
-            (comRef.instance as any)[input.propName] = value;
+  private setProxiedInputs(factory: ComponentFactory<any>): void {
+    factory.inputs.forEach(input => {
+      const comRef = this.componentRef;
+      const setter = (value) => (comRef.instance as any)[input.propName] = value;
+      const zonedSetter = (value) => {
+        NgZone.isInAngularZone()
+          ? setter(value)
+          : this.ngZone.run(() => setter(value));
+        (comRef.instance as any)[input.propName] = value;
+      }
+
+      if (this.elementRef.nativeElement[input.propName] !== undefined) {
+        comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
+      }
+
+      Object.defineProperty(this.elementRef.nativeElement, input.propName, {
+        get(this: NgxElementComponent) {
+          return (comRef.instance as any)[input.propName];
+        },
+        set(this: NgxElementComponent, value: any) {
+          zonedSetter(value);
         }
-        
-        if(this.elementRef.nativeElement[input.propName] !== undefined) {
-          comRef.instance[input.propName] = this.elementRef.nativeElement[input.propName];
-        }
-        
-        Object.defineProperty(this.elementRef.nativeElement, input.propName, {
-          get(this: NgxElementComponent) {
-            return (comRef.instance as any)[input.propName];
-          },
-          set(this: NgxElementComponent, value: any)  {
-            zonedSetter(value);
-          }
-        });
       });
-    }
+    });
+  }
 
   /**
    * Subscribe to event emitters of a lazy loaded and dynamically instantiated Angular component
    * and dispatch them as Custom Events on the NgxElementComponent that is used in a template.
    */
   private setProxiedOutputs(factory: ComponentFactory<any>): void {
-    const eventEmitters = factory.outputs.map(({propName, templateName}) => {
+    const eventEmitters = factory.outputs.map(({ propName, templateName }) => {
       const emitter = (this.componentRef.instance as any)[propName] as EventEmitter<any>;
-      return emitter.pipe(map((value: any) => ({name: templateName, value})));
+      return emitter.pipe(map((value: any) => ({ name: templateName, value })));
     });
     const outputEvents = merge(...eventEmitters);
     this.ngElementEventsSubscription = outputEvents.subscribe(subscription => {
@@ -144,7 +143,7 @@ export class NgxElementComponent implements OnInit, OnDestroy {
         name: this.camelCaseAttribute(attr.nodeName),
         value: attr.nodeValue
       });
-    
+
     }
 
     return attributes;
@@ -177,11 +176,11 @@ export class NgxElementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.componentRef != null) {
+    if (this.componentRef != null) {
       this.componentRef.destroy();
     }
 
-    if(this.ngElementEventsSubscription != null) {
+    if (this.ngElementEventsSubscription != null) {
       this.ngElementEventsSubscription.unsubscribe();
     }
   }
