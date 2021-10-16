@@ -62,7 +62,6 @@
             "main": "projects/ngx-element-app/src/main.ts",
             "polyfills": "projects/ngx-element-app/src/polyfills.ts",
             "tsConfig": "projects/ngx-element-app/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/ngx-element-app/src/favicon.ico",
               "projects/ngx-element-app/src/assets"
@@ -70,7 +69,13 @@
             "styles": [
               "projects/ngx-element-app/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -80,13 +85,10 @@
                   "with": "projects/ngx-element-app/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": false,
               "outputHashing": "none",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": false,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -100,7 +102,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
