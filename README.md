@@ -1,4 +1,7 @@
-![Tests CI](https://github.com/apaq/ngx-element/workflows/Tests%20CI/badge.svg)
+[![Tests CI](https://github.com/jezmaghuyop/ngx-element/actions/workflows/nodejs.yml/badge.svg?branch=features%2Fangular-12)](https://github.com/jezmaghuyop/ngx-element/actions/workflows/nodejs.yml)
+## Disclaimer
+this is just an updated version that I personally modified for my project needs. 
+I've updated the library to use Angular 12, the original package is [here ngx-element](https://github.com/Apaq/ngx-element) by [Michael Krog](https://github.com/michaelkrog) go check it out.
 
 # NgxElement
 
@@ -15,7 +18,7 @@ $ ng add @angular/elements
 
 ## Installing the library
 ```
-$ npm install @apaq/ngx-element
+$ npm install @jezmaghuyop/ngx-lazy-element
 ```
 
 ## Usage
