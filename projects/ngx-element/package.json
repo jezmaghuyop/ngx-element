@@ -1,19 +1,19 @@
 {
-  "name": "@apaq/ngx-element",
-  "version": "0.2.9",
+  "name": "@jezmaghuyop/ngx-lazy-element",
+  "version": "0.0.1",
   "description": "A simple way to lazy load Angular components in non-angular projects",
-  "author": "Michael Krog",
+  "author": "Jez Reel Maghuyop",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apaq/ngx-element.git"
+    "url": "https://github.com/jezmaghuyop/ngx-element"
   },
   "bugs": {
-    "url": "https://github.com/apaq/ngx-element/issues"
+    "url": "https://github.com/jezmaghuyop/ngx-element/issues"
   },
-  "homepage": "https://github.com/apaq/ngx-element",
+  "homepage": "https://github.com/jezmaghuyop/ngx-element",
   "keywords": [
     "angular",
     "elements",
